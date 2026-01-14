@@ -1,0 +1,48 @@
+{
+  "Indiana Jones and the Great Circle": {
+    "FolderName": "The Great Circle",
+    "AppId": "2677660",
+    "Patches": {
+      "Day One Release (1.0)": [
+        {
+          "DepotId": "2677662",
+          "ManifestId": "4874167609916456876"
+        },
+        {
+          "DepotId": "2830501",
+          "ManifestId": "5687220090347415343"
+        },
+        {
+          "DepotId": "2677661",
+          "ManifestId": "6309402492463546295"
+        }
+      ],
+      "Update 2": [
+        {
+          "DepotId": "2677662",
+          "ManifestId": "682938447983161558"
+        },
+        {
+          "DepotId": "2830501",
+          "ManifestId": "5687220090347415343"
+        },
+        {
+          "DepotId": "2677661",
+          "ManifestId": "2469472959766714306"
+        }
+      ]
+    }
+  },
+  "HROT": {
+    "FolderName": "HROT",
+    "AppId": "824600",
+    "Patches": {
+      "1.3": [
+        {
+          "DepotId": "824601",
+          "ManifestId": "6904601082991261160"
+        }
+      ]
+    }
+  }
+}
