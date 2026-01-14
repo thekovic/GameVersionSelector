@@ -32,6 +32,8 @@ public class AppState
     public string SteamPath { get; set; } = GetSteamPathFromRegistry();
     public string SteamUsername { get; set; } = string.Empty;
     public string SteamPassword { get; set; } = string.Empty;
+    public string SelectedGame { get; set; } = string.Empty;
+    public string SelectedPatch { get; set; } = string.Empty;
 
     public DepotDatabase DepotDatabase { get; } = new DepotDatabase();
 

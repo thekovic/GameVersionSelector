@@ -36,6 +36,9 @@ public partial class SteamGameVersionSelectorForm : Form
 
         textBoxSteamPath.Text = App.SteamPath;
         folderBrowserDialogSteamPath.InitialDirectory = App.SteamPath;
+
+        UpdateGameComboBox();
+        UpdatePatchComboBox();
     }
 
     private void ResizeGui()
@@ -55,8 +58,23 @@ public partial class SteamGameVersionSelectorForm : Form
         richTextBoxInstallMessages.Height = panelContentWrapper.Height - richTextBoxInstallMessages.Location.Y - progressBar1.Height - buttonInstall.Height - MARGIN_COMMON - (2 * MARGIN_EDGE);
         // Position progress bar and install button.
         progressBar1.Location = new Point(progressBar1.Location.X, panelContentWrapper.Height - progressBar1.Height - buttonInstall.Height - (2 * MARGIN_EDGE));
-        buttonInstall.Location = new Point(buttonInstall.Location.X, panelContentWrapper.Height - buttonInstall.Height - MARGIN_EDGE);
-        buttonCancel.Location = new Point(buttonCancel.Location.X, panelContentWrapper.Height - buttonInstall.Height - MARGIN_EDGE);
+        progressBar1.Width = panelContentWrapper.Width - (2 * MARGIN_EDGE);
+        buttonInstall.Location = new Point(panelContentWrapper.Width - buttonInstall.Width - MARGIN_COMMON - buttonCancel.Width - MARGIN_EDGE, panelContentWrapper.Height - buttonInstall.Height - MARGIN_EDGE);
+        buttonCancel.Location = new Point(panelContentWrapper.Width - buttonCancel.Width - MARGIN_EDGE, panelContentWrapper.Height - buttonInstall.Height - MARGIN_EDGE);
+    }
+
+    private void UpdateGameComboBox()
+    {
+        // Sort game list alphabetically.
+        var gameNames = App.DepotDatabase.Database.Keys.OrderBy(key => key).ToList();
+        comboBoxGameSelector.DataSource = gameNames;
+    }
+
+    private void UpdatePatchComboBox()
+    {
+        // DON'T sort patch list alphabetically because we assume it's semantically ordered in the database.
+        var patchNames = App.DepotDatabase.Database[App.SelectedGame].Patches.Keys.ToList();
+        comboBoxPatchSelector.DataSource = patchNames;
     }
 
     private void StartProgressBar()
@@ -70,6 +88,36 @@ public partial class SteamGameVersionSelectorForm : Form
         progressBar1.Style = ProgressBarStyle.Continuous;
         progressBar1.MarqueeAnimationSpeed = 0;
         progressBar1.Value = 0;
+    }
+
+    private async void Gui_window_Shown(object sender, EventArgs e)
+    {
+        try
+        {
+            await App.DepotDatabase.InitOnlineDatabase();
+            MessageWriter.WriteLine("Depot database initialized successfully");
+            // Update combo box data sources again if we switched to online database.
+            UpdateGameComboBox();
+            UpdatePatchComboBox();
+        }
+        catch(HttpRequestException httpEx)
+        {
+            MessageWriter.WriteLine($"WARNING: Failed to initialize depot database because remote resources could not be reached.{Environment.NewLine}{httpEx.Message}{Environment.NewLine}Using offline depot database instead.");
+        }
+        catch (Exception ex)
+        {
+            MessageWriter.WriteLine(ex.Message);
+        }
+
+        try
+        {
+            await App.DepotDatabase.InitDepotDownloader();
+            MessageWriter.WriteLine("DepotDownloader initialized successfully");
+        }
+        catch (Exception ex)
+        {
+            MessageWriter.WriteLine(ex.Message);
+        }
     }
 
     private void Gui_window_Resize(object sender, EventArgs e)
@@ -104,20 +152,33 @@ public partial class SteamGameVersionSelectorForm : Form
 
     private void Gui_comboBoxGameSelector_SelectedIndexChanged(object sender, EventArgs e)
     {
+        string? selectedGame = comboBoxGameSelector.SelectedItem as string;
+        if (selectedGame is null)
+        {
+            MessageWriter.WriteLine($"ERROR: Failed to select game.");
+            return;
+        }
 
+        App.SelectedGame = selectedGame;
+        UpdatePatchComboBox();
     }
 
     private void Gui_comboBoxPatchSelector_SelectedIndexChanged(object sender, EventArgs e)
     {
+        string? selectedPatch = comboBoxPatchSelector.SelectedItem as string;
+        if (selectedPatch is null)
+        {
+            return;
+        }
 
+        App.SelectedPatch = selectedPatch;
     }
 
     private async void Gui_buttonInstall_Click(object sender, EventArgs e)
     {
         try
         {
-            //await OsUtils.LaunchProcess("C:\\Code\\PatchCreator\\bin\\Debug\\net10.0\\PatchCreator.exe", [], "C:\\Code\\PatchCreator\\bin\\Debug\\net10.0");
-            App.DepotDatabase.ExportOfflineDatabase("DepotDatabase.json");
+            // TODO: Call DepotDownloader to download the game.
         }
         catch (Exception ex)
         {

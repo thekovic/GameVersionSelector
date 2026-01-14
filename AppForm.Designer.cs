@@ -252,6 +252,7 @@
             Name = "SteamGameVersionSelectorForm";
             Text = "Steam Game Version Selector";
             Resize += Gui_window_Resize;
+            Shown += Gui_window_Shown;
             splitContainer1.Panel1.ResumeLayout(false);
             splitContainer1.Panel1.PerformLayout();
             splitContainer1.Panel2.ResumeLayout(false);
