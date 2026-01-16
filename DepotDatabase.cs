@@ -1,4 +1,5 @@
-﻿using System.Net.Http.Json;
+﻿using System.IO.Compression;
+using System.Net.Http.Json;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -19,12 +20,25 @@ public class Depot
 
 public class DepotDatabase
 {
+    private static IMessageWriter MessageWriter { get => AppState.Instance.MessageWriter; }
+
     private const string DEPOT_DOWNLOADER_URL = "https://github.com/SteamRE/DepotDownloader/releases/download/DepotDownloader_3.4.0/DepotDownloader-windows-x64.zip";
     private const string ONLINE_DATABASE_URL = "https://raw.githubusercontent.com/thekovic/SteamGameVersionSelector/refs/heads/main/DepotDatabase.json";
 
     public async Task InitDepotDownloader()
     {
-        throw new NotImplementedException("ERROR: DepotDownloader initialization not yet implemented!");
+        if (File.Exists("DepotDownloader.exe"))
+        {
+            return;
+        }
+
+        MessageWriter.WriteLine("DepotDownloader not found. Downloading...");
+
+        using var httpClient = new HttpClient();
+        var archiveData = await httpClient.GetByteArrayAsync(DEPOT_DOWNLOADER_URL);
+        using var archiveStream = new ZipArchive(new MemoryStream(archiveData));
+
+        archiveStream.ExtractToDirectory(".");
     }
 
     private Dictionary<string, Game>? _onlineDatabase;

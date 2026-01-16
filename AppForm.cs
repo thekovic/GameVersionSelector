@@ -95,7 +95,7 @@ public partial class SteamGameVersionSelectorForm : Form
         try
         {
             await App.DepotDatabase.InitOnlineDatabase();
-            MessageWriter.WriteLine("Depot database initialized successfully");
+            MessageWriter.WriteLine("Depot database initialized successfully.");
             // Update combo box data sources again if we switched to online database.
             UpdateGameComboBox();
             UpdatePatchComboBox();
@@ -112,11 +112,13 @@ public partial class SteamGameVersionSelectorForm : Form
         try
         {
             await App.DepotDatabase.InitDepotDownloader();
-            MessageWriter.WriteLine("DepotDownloader initialized successfully");
+            MessageWriter.WriteLine("DepotDownloader initialized successfully.");
         }
         catch (Exception ex)
         {
             MessageWriter.WriteLine(ex.Message);
+            MessageWriter.WriteLine("ERROR: Failed to initialize DepotDownloader. Game versions cannot be installed.");
+            buttonInstall.Enabled = false;
         }
     }
 
