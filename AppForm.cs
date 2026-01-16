@@ -21,6 +21,8 @@ public partial class SteamGameVersionSelectorForm : Form
 
     private AppState App { get; }
 
+    private CancellationTokenSource? _launchCts;
+
     public SteamGameVersionSelectorForm()
     {
         InitializeComponent();
@@ -178,19 +180,48 @@ public partial class SteamGameVersionSelectorForm : Form
 
     private async void Gui_buttonInstall_Click(object sender, EventArgs e)
     {
+        // Prevent double-start.
+        if (_launchCts != null)
+        {
+            MessageWriter.WriteLine("ERROR: DepotDownloader instance is already running.");
+            return;
+        }
+
+        _launchCts = new CancellationTokenSource();
         try
         {
-            // TODO: Call DepotDownloader to download the game.
+            StartProgressBar();
+            buttonInstall.Enabled = false;
+
+            // TODO: Add process arguments
+            await OsUtils.LaunchProcess("DepotDownloader.exe", [], ".", _launchCts.Token);
+        }
+        catch (OperationCanceledException)
+        {
+            MessageWriter.WriteLine("Operation cancelled by user.");
         }
         catch (Exception ex)
         {
             MessageWriter.WriteLine(ex.Message);
         }
+        finally
+        {
+            StopProgressBar();
+            buttonInstall.Enabled = true;
+            _launchCts?.Dispose();
+            _launchCts = null;
+        }
     }
 
     private void Gui_buttonCancel_Click(object sender, EventArgs e)
     {
-        // TODO: Implement proper cancellation of ongoing background process.
+        // If a process is running, request cancellation and give it time to terminate.
+        if (_launchCts != null && !_launchCts.IsCancellationRequested)
+        {
+            MessageWriter.WriteLine("Shutting down DepotDownloader...");
+            _launchCts.Cancel();
+        }
+
         Close();
     }
 }

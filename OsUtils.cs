@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Threading;
 
 namespace SteamGameVersionSelector;
 
@@ -6,7 +7,7 @@ public class OsUtils
 {
     private static IMessageWriter MessageWriter { get => AppState.Instance.MessageWriter; }
 
-    public static async Task LaunchProcess(string processName, string[] args, string workingDirectory)
+    public static async Task<int> LaunchProcess(string processName, string[] args, string workingDirectory, CancellationToken cancellationToken = default)
     {
         using var process = new Process();
 
@@ -54,6 +55,43 @@ public class OsUtils
         process.BeginErrorReadLine();
 
         // Keep method alive until the process exits so the Process is not disposed early
-        await process.WaitForExitAsync().ConfigureAwait(false);
+        //await process.WaitForExitAsync().ConfigureAwait(false);
+
+        try
+        {
+            // Wait for exit; if cancellation requested, WaitForExitAsync will throw OperationCanceledException
+            await process.WaitForExitAsync(cancellationToken).ConfigureAwait(false);
+        }
+        catch (OperationCanceledException)
+        {
+            // Cancellation requested — try to terminate the process.
+            try
+            {
+                if (!process.HasExited)
+                {
+                    process.Kill(entireProcessTree: true);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Best effort: write message, but do not rethrow here — propagate cancellation below.
+                MessageWriter.WriteLine($"Failed to kill process '{processName}': {ex.Message}");
+            }
+
+            // Wait for it to actually exit (no cancellation token here to ensure cleanup).
+            try
+            {
+                await process.WaitForExitAsync(CancellationToken.None).ConfigureAwait(false);
+            }
+            catch
+            {
+                // ignore
+            }
+
+            // rethrow so callers know operation was cancelled
+            throw;
+        }
+
+        return process.ExitCode;
     }
 }
