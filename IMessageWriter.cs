@@ -35,6 +35,9 @@ public class GuiMessageWriter(RichTextBox messageBox) : IMessageWriter
         else
         {
             MessageBox.AppendText($"{message}{Environment.NewLine}");
+            // Scroll to end after new message is added.
+            MessageBox.SelectionStart = MessageBox.TextLength;
+            MessageBox.ScrollToCaret();
         }
     }
 }
