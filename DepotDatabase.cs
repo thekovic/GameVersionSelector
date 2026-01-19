@@ -74,7 +74,7 @@ public class DepotDatabase
                 Patches = new Dictionary<string, Depot[]>()
                 {
                     {
-                        "Day One Release", [
+                        "Day One Release (1.0)", [
                             new Depot { DepotId = "2677662", ManifestId = "4874167609916456876" },
                             new Depot { DepotId = "2830501", ManifestId = "5687220090347415343" },
                             new Depot { DepotId = "2677661", ManifestId = "6309402492463546295" }
@@ -91,15 +91,15 @@ public class DepotDatabase
             }
         },
         {
-            "HROT", new Game
+            "Quake 2 Enhanced", new Game
             {
-                FolderName = "HROT",
-                AppId = "824600",
+                FolderName = "Quake II",
+                AppId = "2320",
                 Patches = new Dictionary<string, Depot[]>()
                 {
                     {
-                        "1.3", [
-                            new Depot { DepotId = "824601", ManifestId = "6904601082991261160" }
+                        "Update 1 Hotfix", [
+                            new Depot { DepotId = "2321", ManifestId = "4487921537736026312" }
                         ]
                     }
                 }

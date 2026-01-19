@@ -33,14 +33,14 @@
       ]
     }
   },
-  "HROT": {
-    "FolderName": "HROT",
-    "AppId": "824600",
+  "Quake 2 Enhanced": {
+    "FolderName": "Quake II",
+    "AppId": "2320",
     "Patches": {
-      "1.3": [
+      "Update 1 Hotfix": [
         {
-          "DepotId": "824601",
-          "ManifestId": "6904601082991261160"
+          "DepotId": "2321",
+          "ManifestId": "4487921537736026312"
         }
       ]
     }
