@@ -1,6 +1,6 @@
 ﻿using Microsoft.Win32;
 
-namespace SteamGameVersionSelector;
+namespace GameVersionSelector;
 
 /// <summary>
 /// Provides centralized access to application-wide services, configuration, and global state.

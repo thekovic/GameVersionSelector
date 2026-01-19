@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
 
-namespace SteamGameVersionSelector;
+namespace GameVersionSelector;
 
-public partial class SteamGameVersionSelectorForm : Form
+public partial class GameVersionSelectorForm : Form
 {
     /// <summary>
     /// Default margin value used for all the controls in the GUI. Used when calculating window size during resizing.
@@ -23,7 +23,7 @@ public partial class SteamGameVersionSelectorForm : Form
 
     private CancellationTokenSource? _launchCts;
 
-    public SteamGameVersionSelectorForm()
+    public GameVersionSelectorForm()
     {
         InitializeComponent();
 

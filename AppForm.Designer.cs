@@ -1,6 +1,6 @@
-﻿namespace SteamGameVersionSelector
+﻿namespace GameVersionSelector
 {
-    partial class SteamGameVersionSelectorForm
+    partial class GameVersionSelectorForm
     {
         /// <summary>
         ///  Required designer variable.
@@ -242,15 +242,15 @@
             panelContentWrapper.Size = new Size(782, 673);
             panelContentWrapper.TabIndex = 13;
             // 
-            // SteamGameVersionSelectorForm
+            // GameVersionSelectorForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(782, 673);
             Controls.Add(panelContentWrapper);
             MinimumSize = new Size(800, 480);
-            Name = "SteamGameVersionSelectorForm";
-            Text = "Steam Game Version Selector";
+            Name = "GameVersionSelectorForm";
+            Text = "Game Version Selector";
             Resize += Gui_window_Resize;
             Shown += Gui_window_Shown;
             splitContainer1.Panel1.ResumeLayout(false);

@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Threading;
 
-namespace SteamGameVersionSelector;
+namespace GameVersionSelector;
 
 public class OsUtils
 {

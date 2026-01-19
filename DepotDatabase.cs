@@ -3,7 +3,7 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace SteamGameVersionSelector;
+namespace GameVersionSelector;
 
 public class Game
 {
@@ -23,7 +23,7 @@ public class DepotDatabase
     private static IMessageWriter MessageWriter { get => AppState.Instance.MessageWriter; }
 
     private const string DEPOT_DOWNLOADER_URL = "https://github.com/SteamRE/DepotDownloader/releases/download/DepotDownloader_3.4.0/DepotDownloader-windows-x64.zip";
-    private const string ONLINE_DATABASE_URL = "https://raw.githubusercontent.com/thekovic/SteamGameVersionSelector/refs/heads/main/DepotDatabase.json";
+    private const string ONLINE_DATABASE_URL = "https://raw.githubusercontent.com/thekovic/GameVersionSelector/refs/heads/main/DepotDatabase.json";
 
     public async Task InitDepotDownloader()
     {

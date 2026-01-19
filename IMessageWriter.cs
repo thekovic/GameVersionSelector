@@ -1,4 +1,4 @@
-﻿namespace SteamGameVersionSelector;
+﻿namespace GameVersionSelector;
 
 public interface IMessageWriter
 {
