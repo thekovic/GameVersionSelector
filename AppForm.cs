@@ -122,6 +122,10 @@ public partial class SteamGameVersionSelectorForm : Form
             MessageWriter.WriteLine("ERROR: Failed to initialize DepotDownloader. Game versions cannot be installed.");
             buttonInstall.Enabled = false;
         }
+        finally
+        {
+            MessageWriter.WriteLine("");
+        }
     }
 
     private void Gui_window_Resize(object sender, EventArgs e)
@@ -194,7 +198,29 @@ public partial class SteamGameVersionSelectorForm : Form
             buttonInstall.Enabled = false;
 
             // TODO: Add process arguments
-            await OsUtils.LaunchProcess("DepotDownloader.exe", [], ".", _launchCts.Token);
+            var game = App.DepotDatabase.Database[App.SelectedGame]!;
+            var depots = game.Patches[App.SelectedPatch]!;
+            foreach (var depot in depots)
+            {
+                string[] args = [
+                    "-app",
+                    $"{game.AppId}",
+                    "-depot",
+                    $"{depot.DepotId}",
+                    "-manifest",
+                    $"{depot.ManifestId}",
+                    "-username",
+                    $"{App.SteamUsername}",
+                    "-password",
+                    $"{App.SteamPassword}",
+                    "-dir",
+                    $"{Path.Combine(App.SteamPath, game.FolderName)}"
+                ];
+
+                await OsUtils.LaunchProcess("DepotDownloader.exe", args, ".", _launchCts.Token);
+            }
+
+            MessageWriter.WriteLine($"{Environment.NewLine}Installation completed successfully. You may close the app now.{Environment.NewLine}");
         }
         catch (OperationCanceledException)
         {
