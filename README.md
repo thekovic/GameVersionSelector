@@ -8,3 +8,5 @@ Windows Forms app for downloading specific versions of games from Steam.
 ## Documentation
 
 Download the latest version on the [Releases](https://github.com/thekovic/GameVersionSelector/releases/latest) page. Extract the downloaded archive anywhere and run `GameVersionSelector.exe`.
+
+Uses [Depot Downloader](https://github.com/SteamRE/DepotDownloader) licensed under the terms of the GNU Public License 2.0.
