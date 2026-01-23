@@ -79,7 +79,7 @@
             labelSteamPath.Name = "labelSteamPath";
             labelSteamPath.Size = new Size(328, 20);
             labelSteamPath.TabIndex = 2;
-            labelSteamPath.Text = "Select path to your 'steamapps\\common' folder:";
+            labelSteamPath.Text = "Select path to your 'Steam\\steamapps\\common' folder:";
             labelSteamPath.UseMnemonic = false;
             // 
             // comboBoxGameSelector
