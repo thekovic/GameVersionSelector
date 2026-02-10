@@ -1,5 +1,5 @@
 # Game Version Selector
-Windows Forms app for downloading specific versions of games from Steam.
+Desktop app for downloading specific versions of games from Steam.
 
 ## Prerequisites
 
