@@ -7,7 +7,7 @@ public partial class GameVersionSelectorForm : Form
     /// <summary>
     /// Default margin value used for all the controls in the GUI. Used when calculating window size during resizing.
     /// </summary>
-    private const int MARGIN_COMMON = 6;
+    private const int MARGIN_COMMON = 3;
     /// <summary>
     /// Double the margin value to account for two sides (left and right or up and down) of the control.
     /// </summary>
@@ -15,7 +15,7 @@ public partial class GameVersionSelectorForm : Form
     /// <summary>
     /// Default margin value elements use when placed next to the edge of the window.
     /// </summary>
-    private const int MARGIN_EDGE = 12;
+    private const int MARGIN_EDGE = 6;
 
     private GuiMessageWriter MessageWriter { get; }
 
@@ -46,23 +46,30 @@ public partial class GameVersionSelectorForm : Form
     private void ResizeGui()
     {
         // Resize Steam path selector.
-        textBoxSteamPath.Width = panelContentWrapper.Width - buttonSteamPath.Width - MARGIN_COMMON - (2 * MARGIN_EDGE);
+        textBoxSteamPath.Width = panelContentWrapper.Width - buttonSteamPath.Width - MARGIN_DOUBLE - (2 * MARGIN_EDGE);
         buttonSteamPath.Location = new Point(panelContentWrapper.Width - buttonSteamPath.Width - MARGIN_EDGE, buttonSteamPath.Location.Y);
+        // Resize split container. Add extra size on the right edge to prevent the dropdown boxes from strangely clipping.
+        int intendedSplitContainerWidth = panelContentWrapper.Width - (2 * MARGIN_EDGE);
+        splitContainer1.Width = intendedSplitContainerWidth + MARGIN_COMMON;
+        splitContainer1.SplitterDistance = (intendedSplitContainerWidth - splitContainer1.SplitterWidth) / 2;
         // Resize username / password text boxes and game / patch selectors.
-        splitContainer1.Width = panelContentWrapper.Width - (2 * MARGIN_EDGE);
-        splitContainer1.SplitterDistance = (splitContainer1.Width - splitContainer1.SplitterWidth) / 2;
-        textBoxSteamUsername.Width = splitContainer1.Panel1.Width - labelSteamUsername.Width - (3 * MARGIN_COMMON);
-        textBoxSteamPassword.Width = splitContainer1.Panel1.Width - labelSteamUsername.Width - (3 * MARGIN_COMMON);
-        comboBoxGameSelector.Width = splitContainer1.Panel2.Width - labelPatchSelector.Width - (3 * MARGIN_COMMON);
-        comboBoxPatchSelector.Width = splitContainer1.Panel2.Width - labelPatchSelector.Width - (3 * MARGIN_COMMON);
+        textBoxSteamUsername.Width = splitContainer1.Panel1.Width - labelSteamUsername.Width - (2 * MARGIN_COMMON);
+        textBoxSteamPassword.Width = splitContainer1.Panel1.Width - labelSteamUsername.Width - (2 * MARGIN_COMMON);
+        comboBoxGameSelector.Width = splitContainer1.Panel2.Width - labelPatchSelector.Width - (2 * MARGIN_COMMON);
+        comboBoxPatchSelector.Width = splitContainer1.Panel2.Width - labelPatchSelector.Width - (2 * MARGIN_COMMON);
         // Resize message box.
         richTextBoxInstallMessages.Width = panelContentWrapper.Width - (2 * MARGIN_EDGE);
-        richTextBoxInstallMessages.Height = panelContentWrapper.Height - richTextBoxInstallMessages.Location.Y - progressBar1.Height - buttonInstall.Height - MARGIN_COMMON - (2 * MARGIN_EDGE);
-        // Position progress bar and install button.
-        progressBar1.Location = new Point(progressBar1.Location.X, panelContentWrapper.Height - progressBar1.Height - buttonInstall.Height - (2 * MARGIN_EDGE));
+        richTextBoxInstallMessages.Height = panelContentWrapper.Height - richTextBoxInstallMessages.Location.Y - MARGIN_COMMON - progressBar1.Height - MARGIN_DOUBLE - buttonInstall.Height - (2 * MARGIN_EDGE);
+        // Resize and position progress bar.
+        progressBar1.Location = new Point(progressBar1.Location.X, panelContentWrapper.Height - progressBar1.Height - MARGIN_DOUBLE - buttonInstall.Height - (2 * MARGIN_EDGE));
         progressBar1.Width = panelContentWrapper.Width - (2 * MARGIN_EDGE);
-        buttonInstall.Location = new Point(panelContentWrapper.Width - buttonInstall.Width - MARGIN_COMMON - buttonCancel.Width - MARGIN_EDGE, panelContentWrapper.Height - buttonInstall.Height - MARGIN_EDGE);
-        buttonCancel.Location = new Point(panelContentWrapper.Width - buttonCancel.Width - MARGIN_EDGE, panelContentWrapper.Height - buttonInstall.Height - MARGIN_EDGE);
+        // Position install and cancel buttons.
+        buttonInstall.Location = new Point(
+            panelContentWrapper.Width - buttonInstall.Width - MARGIN_DOUBLE - buttonCancel.Width - MARGIN_EDGE,
+            panelContentWrapper.Height - buttonInstall.Height - (2 * MARGIN_EDGE));
+        buttonCancel.Location = new Point(
+            panelContentWrapper.Width - buttonCancel.Width - MARGIN_EDGE,
+            panelContentWrapper.Height - buttonInstall.Height - (2 * MARGIN_EDGE));
     }
 
     private void UpdateGameComboBox()

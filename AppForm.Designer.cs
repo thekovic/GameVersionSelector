@@ -56,17 +56,19 @@
             // 
             // textBoxSteamPath
             // 
-            textBoxSteamPath.Location = new Point(12, 32);
+            textBoxSteamPath.Location = new Point(6, 24);
+            textBoxSteamPath.Margin = new Padding(3, 2, 3, 2);
             textBoxSteamPath.Name = "textBoxSteamPath";
-            textBoxSteamPath.Size = new Size(658, 27);
+            textBoxSteamPath.Size = new Size(524, 23);
             textBoxSteamPath.TabIndex = 0;
             textBoxSteamPath.TextChanged += Gui_textBoxSteamPath_TextChanged;
             // 
             // buttonSteamPath
             // 
-            buttonSteamPath.Location = new Point(676, 31);
+            buttonSteamPath.Location = new Point(536, 24);
+            buttonSteamPath.Margin = new Padding(3, 2, 3, 2);
             buttonSteamPath.Name = "buttonSteamPath";
-            buttonSteamPath.Size = new Size(94, 29);
+            buttonSteamPath.Size = new Size(82, 23);
             buttonSteamPath.TabIndex = 1;
             buttonSteamPath.Text = "Browse...";
             buttonSteamPath.UseVisualStyleBackColor = true;
@@ -75,9 +77,9 @@
             // labelSteamPath
             // 
             labelSteamPath.AutoSize = true;
-            labelSteamPath.Location = new Point(12, 9);
+            labelSteamPath.Location = new Point(6, 7);
             labelSteamPath.Name = "labelSteamPath";
-            labelSteamPath.Size = new Size(328, 20);
+            labelSteamPath.Size = new Size(301, 15);
             labelSteamPath.TabIndex = 2;
             labelSteamPath.Text = "Select path to your 'Steam\\steamapps\\common' folder:";
             labelSteamPath.UseMnemonic = false;
@@ -86,28 +88,28 @@
             // 
             comboBoxGameSelector.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxGameSelector.FormattingEnabled = true;
-            comboBoxGameSelector.Location = new Point(132, 4);
-            comboBoxGameSelector.Margin = new Padding(3, 3, 0, 3);
+            comboBoxGameSelector.Location = new Point(95, 3);
+            comboBoxGameSelector.Margin = new Padding(3, 2, 0, 2);
             comboBoxGameSelector.Name = "comboBoxGameSelector";
-            comboBoxGameSelector.Size = new Size(246, 28);
+            comboBoxGameSelector.Size = new Size(210, 23);
             comboBoxGameSelector.TabIndex = 3;
             comboBoxGameSelector.SelectedIndexChanged += Gui_comboBoxGameSelector_SelectedIndexChanged;
             // 
             // labelPatchSelector
             // 
             labelPatchSelector.AutoSize = true;
-            labelPatchSelector.Location = new Point(6, 39);
+            labelPatchSelector.Location = new Point(0, 33);
             labelPatchSelector.Name = "labelPatchSelector";
-            labelPatchSelector.Size = new Size(114, 20);
+            labelPatchSelector.Size = new Size(92, 15);
             labelPatchSelector.TabIndex = 4;
             labelPatchSelector.Text = "Choose a patch:";
             // 
             // labelGameSelector
             // 
             labelGameSelector.AutoSize = true;
-            labelGameSelector.Location = new Point(6, 6);
+            labelGameSelector.Location = new Point(0, 5);
             labelGameSelector.Name = "labelGameSelector";
-            labelGameSelector.Size = new Size(115, 20);
+            labelGameSelector.Size = new Size(92, 15);
             labelGameSelector.TabIndex = 5;
             labelGameSelector.Text = "Choose a game:";
             // 
@@ -115,15 +117,18 @@
             // 
             comboBoxPatchSelector.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxPatchSelector.FormattingEnabled = true;
-            comboBoxPatchSelector.Location = new Point(132, 37);
+            comboBoxPatchSelector.Location = new Point(95, 30);
+            comboBoxPatchSelector.Margin = new Padding(3, 2, 3, 2);
             comboBoxPatchSelector.Name = "comboBoxPatchSelector";
-            comboBoxPatchSelector.Size = new Size(246, 28);
+            comboBoxPatchSelector.Size = new Size(210, 23);
             comboBoxPatchSelector.TabIndex = 6;
             comboBoxPatchSelector.SelectedIndexChanged += Gui_comboBoxPatchSelector_SelectedIndexChanged;
             // 
             // splitContainer1
             // 
-            splitContainer1.Location = new Point(12, 65);
+            splitContainer1.IsSplitterFixed = true;
+            splitContainer1.Location = new Point(6, 48);
+            splitContainer1.Margin = new Padding(3, 2, 3, 2);
             splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -139,70 +144,74 @@
             splitContainer1.Panel2.Controls.Add(comboBoxPatchSelector);
             splitContainer1.Panel2.Controls.Add(comboBoxGameSelector);
             splitContainer1.Panel2.Controls.Add(labelGameSelector);
-            splitContainer1.Size = new Size(758, 74);
-            splitContainer1.SplitterDistance = 378;
+            splitContainer1.Size = new Size(615, 56);
+            splitContainer1.SplitterDistance = 305;
             splitContainer1.SplitterWidth = 2;
             splitContainer1.TabIndex = 7;
             // 
             // labelSteamPassword
             // 
             labelSteamPassword.AutoSize = true;
-            labelSteamPassword.Location = new Point(0, 39);
+            labelSteamPassword.Location = new Point(0, 33);
             labelSteamPassword.Name = "labelSteamPassword";
-            labelSteamPassword.Size = new Size(192, 20);
+            labelSteamPassword.Size = new Size(153, 15);
             labelSteamPassword.TabIndex = 3;
             labelSteamPassword.Text = "Enter your Steam password:";
             // 
             // labelSteamUsername
             // 
             labelSteamUsername.AutoSize = true;
-            labelSteamUsername.Location = new Point(0, 6);
+            labelSteamUsername.Location = new Point(0, 5);
             labelSteamUsername.Name = "labelSteamUsername";
-            labelSteamUsername.Size = new Size(193, 20);
+            labelSteamUsername.Size = new Size(155, 15);
             labelSteamUsername.TabIndex = 2;
             labelSteamUsername.Text = "Enter your Steam username:";
             // 
             // textBoxSteamUsername
             // 
-            textBoxSteamUsername.Location = new Point(205, 4);
+            textBoxSteamUsername.Location = new Point(158, 3);
+            textBoxSteamUsername.Margin = new Padding(3, 2, 3, 2);
             textBoxSteamUsername.Name = "textBoxSteamUsername";
-            textBoxSteamUsername.Size = new Size(167, 27);
+            textBoxSteamUsername.Size = new Size(143, 23);
             textBoxSteamUsername.TabIndex = 0;
             textBoxSteamUsername.TextChanged += Gui_textBoxSteamUsername_TextChanged;
             // 
             // textBoxSteamPassword
             // 
-            textBoxSteamPassword.Location = new Point(205, 37);
+            textBoxSteamPassword.Location = new Point(158, 30);
+            textBoxSteamPassword.Margin = new Padding(3, 2, 3, 2);
             textBoxSteamPassword.Name = "textBoxSteamPassword";
             textBoxSteamPassword.PasswordChar = '*';
-            textBoxSteamPassword.Size = new Size(167, 27);
+            textBoxSteamPassword.Size = new Size(143, 23);
             textBoxSteamPassword.TabIndex = 1;
             textBoxSteamPassword.TextChanged += Gui_textBoxSteamPassword_TextChanged;
             // 
             // richTextBoxInstallMessages
             // 
             richTextBoxInstallMessages.BorderStyle = BorderStyle.FixedSingle;
-            richTextBoxInstallMessages.Location = new Point(12, 165);
+            richTextBoxInstallMessages.Location = new Point(6, 124);
+            richTextBoxInstallMessages.Margin = new Padding(3, 2, 3, 2);
             richTextBoxInstallMessages.Name = "richTextBoxInstallMessages";
             richTextBoxInstallMessages.ReadOnly = true;
-            richTextBoxInstallMessages.Size = new Size(758, 180);
+            richTextBoxInstallMessages.Size = new Size(612, 136);
             richTextBoxInstallMessages.TabIndex = 8;
             richTextBoxInstallMessages.Text = "";
             // 
             // labelInstall
             // 
             labelInstall.AutoSize = true;
-            labelInstall.Location = new Point(12, 142);
+            labelInstall.Location = new Point(6, 106);
             labelInstall.Name = "labelInstall";
-            labelInstall.Size = new Size(145, 20);
+            labelInstall.Size = new Size(116, 15);
             labelInstall.TabIndex = 9;
             labelInstall.Text = "Installation Progress:";
             // 
             // buttonInstall
             // 
-            buttonInstall.Location = new Point(576, 392);
+            buttonInstall.Location = new Point(448, 294);
+            buttonInstall.Margin = new Padding(3, 2, 3, 2);
             buttonInstall.Name = "buttonInstall";
-            buttonInstall.Size = new Size(94, 29);
+            buttonInstall.Size = new Size(82, 22);
             buttonInstall.TabIndex = 10;
             buttonInstall.Text = "Install";
             buttonInstall.UseVisualStyleBackColor = true;
@@ -210,16 +219,18 @@
             // 
             // progressBar1
             // 
-            progressBar1.Location = new Point(12, 351);
+            progressBar1.Location = new Point(6, 263);
+            progressBar1.Margin = new Padding(3, 2, 3, 2);
             progressBar1.Name = "progressBar1";
-            progressBar1.Size = new Size(758, 29);
+            progressBar1.Size = new Size(612, 22);
             progressBar1.TabIndex = 11;
             // 
             // buttonCancel
             // 
-            buttonCancel.Location = new Point(676, 392);
+            buttonCancel.Location = new Point(536, 294);
+            buttonCancel.Margin = new Padding(3, 2, 3, 2);
             buttonCancel.Name = "buttonCancel";
-            buttonCancel.Size = new Size(94, 29);
+            buttonCancel.Size = new Size(82, 22);
             buttonCancel.TabIndex = 12;
             buttonCancel.Text = "Cancel";
             buttonCancel.UseVisualStyleBackColor = true;
@@ -238,21 +249,23 @@
             panelContentWrapper.Controls.Add(textBoxSteamPath);
             panelContentWrapper.Dock = DockStyle.Fill;
             panelContentWrapper.Location = new Point(0, 0);
+            panelContentWrapper.Margin = new Padding(3, 2, 3, 2);
             panelContentWrapper.Name = "panelContentWrapper";
-            panelContentWrapper.Size = new Size(782, 673);
+            panelContentWrapper.Size = new Size(624, 441);
             panelContentWrapper.TabIndex = 13;
             // 
             // GameVersionSelectorForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(782, 673);
+            ClientSize = new Size(624, 441);
             Controls.Add(panelContentWrapper);
-            MinimumSize = new Size(800, 480);
+            Margin = new Padding(3, 2, 3, 2);
+            MinimumSize = new Size(640, 480);
             Name = "GameVersionSelectorForm";
             Text = "Game Version Selector";
-            Resize += Gui_window_Resize;
             Shown += Gui_window_Shown;
+            Resize += Gui_window_Resize;
             splitContainer1.Panel1.ResumeLayout(false);
             splitContainer1.Panel1.PerformLayout();
             splitContainer1.Panel2.ResumeLayout(false);
