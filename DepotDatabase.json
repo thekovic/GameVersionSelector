@@ -44,5 +44,29 @@
         }
       ]
     }
+  },
+  "Tomb Raider 123 Remastered": {
+    "FolderName": "Tomb Raider I-III Remastered",
+    "AppId": "2478970",
+    "Patches": {
+      "Release Patch (v1.01)": [
+        {
+          "DepotId": "2478971",
+          "ManifestId": "780596582911938715"
+        }
+      ],
+      "Patch 4": [
+        {
+          "DepotId": "2478971",
+          "ManifestId": "261356773552750518"
+        }
+      ],
+      "Patch 6": [
+        {
+          "DepotId": "2478971",
+          "ManifestId": "5075321733709810017"
+        }
+      ]
+    }
   }
 }
