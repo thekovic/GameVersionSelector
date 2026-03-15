@@ -51,7 +51,6 @@ public partial class GameVersionSelectorForm : Form
         // Resize split container. Add extra size on the right edge to prevent the dropdown boxes from strangely clipping.
         int intendedSplitContainerWidth = panelContentWrapper.Width - (2 * MARGIN_EDGE);
         splitContainer1.Width = intendedSplitContainerWidth + MARGIN_COMMON;
-        splitContainer1.SplitterDistance = (intendedSplitContainerWidth - splitContainer1.SplitterWidth) / 2;
         // Resize username / password text boxes and game / patch selectors.
         textBoxSteamUsername.Width = splitContainer1.Panel1.Width - labelSteamUsername.Width - (2 * MARGIN_COMMON);
         textBoxSteamPassword.Width = splitContainer1.Panel1.Width - labelSteamUsername.Width - (2 * MARGIN_COMMON);
