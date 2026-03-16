@@ -203,7 +203,6 @@ public partial class GameVersionSelectorForm : Form
             StartProgressBar();
             buttonInstall.Enabled = false;
 
-            // TODO: Add process arguments
             var game = App.DepotDatabase.Database[App.SelectedGame]!;
             var depots = game.Patches[App.SelectedPatch]!;
             foreach (var depot in depots)
