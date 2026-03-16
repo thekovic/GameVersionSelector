@@ -30,14 +30,19 @@ public class GuiMessageWriter(RichTextBox messageBox) : IMessageWriter
         // Dispatch action based on what the GUI needs
         if (MessageBox.InvokeRequired)
         {
-            MessageBox.Invoke(() => MessageBox.AppendText($"{message}{Environment.NewLine}"));
+            MessageBox.Invoke(() => WriteLineAndScroll(message));
         }
         else
         {
-            MessageBox.AppendText($"{message}{Environment.NewLine}");
-            // Scroll to end after new message is added.
-            MessageBox.SelectionStart = MessageBox.TextLength;
-            MessageBox.ScrollToCaret();
+            WriteLineAndScroll(message);
         }
+    }
+
+    private void WriteLineAndScroll(string message)
+    {
+        MessageBox.AppendText($"{message}{Environment.NewLine}");
+        // Scroll to end after new message is added.
+        MessageBox.SelectionStart = MessageBox.TextLength;
+        MessageBox.ScrollToCaret();
     }
 }
