@@ -101,4 +101,47 @@ public class AppState
         string fixedPath = Path.GetFullPath(registryValue.ToString()!);
         return Path.Combine(fixedPath, "steamapps", "common");
     }
+
+    /// <summary>
+    /// Launches the external DepotDownloader process to download the depots required for the currently selected game and patch.
+    /// </summary>
+    /// <param name="cancellationToken">Token used to cancel the operation.</param>
+    /// <exception cref="InvalidOperationException">
+    /// Thrown if required runtime state is missing (for example, an empty <see cref="SteamPath"/> or missing Steam credentials when required).
+    /// </exception>
+    /// <exception cref="Exception">
+    /// Thrown when the external tool <c>DepotDownloader.exe</c> exits with a non-zero exit code indicating a failure to download a depot.
+    /// </exception>
+    /// <remarks>
+    /// For each depot referenced by the selected patch, this method builds the appropriate command-line arguments and invokes <see cref="OsUtils.LaunchProcess(string, string[], string, CancellationToken)"/>.
+    /// Credentials supplied via <see cref="SteamUsername"/> and <see cref="SteamPassword"/> are used only for the current session and are not persisted.
+    /// On successful completion a user-visible success message is written using <see cref="MessageWriter"/>.
+    /// </remarks>
+    public async Task LaunchDepotDownloader(CancellationToken cancellationToken)
+    {
+        var game = DepotDatabase.Database[SelectedGame];
+        var depots = game.Patches[SelectedPatch];
+        foreach (var depot in depots)
+        {
+            string[] args = [
+                // Specify the app, depot, and manifest to download.
+                "-app", $"{game.AppId}",
+                "-depot", $"{depot.DepotId}",
+                "-manifest", $"{depot.ManifestId}",
+                // Pass Steam credentials to authenticate with Steam. These credentials are not stored persistently and are only used for the current session. If two-factor authentication is enabled on the account, the user must also confirm the login through the Steam Guard app before DepotDownloader can download the selected depot.
+                "-username", $"{SteamUsername}",
+                "-password", $"{SteamPassword}",
+                // Specify the output directory for the downloaded depot. By default, the app encourages the user to select their "Steam/steamapps/common" directory which means the downloaded version of the game replaces the existing installation in-place. However, users can select any directory they want if they prefer to preserve their existing installation.
+                "-dir", $"{Path.Combine(SteamPath, game.FolderName)}"
+            ];
+
+            int errorCode = await OsUtils.LaunchProcess("DepotDownloader.exe", args, ".", cancellationToken);
+            if (errorCode != 0)
+            {
+                throw new Exception($"ERROR: DepotDownloader exited with code {errorCode}. Installation may not be complete.");
+            }
+        }
+
+        MessageWriter.WriteLine($"{Environment.NewLine}Installation of {SelectedGame} version {SelectedPatch} completed successfully. You may close the app now.{Environment.NewLine}");
+    }
 }

@@ -203,29 +203,7 @@ public partial class GameVersionSelectorForm : Form
             StartProgressBar();
             buttonInstall.Enabled = false;
 
-            var game = App.DepotDatabase.Database[App.SelectedGame]!;
-            var depots = game.Patches[App.SelectedPatch]!;
-            foreach (var depot in depots)
-            {
-                string[] args = [
-                    "-app",
-                    $"{game.AppId}",
-                    "-depot",
-                    $"{depot.DepotId}",
-                    "-manifest",
-                    $"{depot.ManifestId}",
-                    "-username",
-                    $"{App.SteamUsername}",
-                    "-password",
-                    $"{App.SteamPassword}",
-                    "-dir",
-                    $"{Path.Combine(App.SteamPath, game.FolderName)}"
-                ];
-
-                await OsUtils.LaunchProcess("DepotDownloader.exe", args, ".", _launchCts.Token);
-            }
-
-            MessageWriter.WriteLine($"{Environment.NewLine}Installation completed successfully. You may close the app now.{Environment.NewLine}");
+            await App.LaunchDepotDownloader(_launchCts.Token);
         }
         catch (OperationCanceledException)
         {
