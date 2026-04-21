@@ -17,7 +17,7 @@ public partial class GameVersionSelectorForm : Form
     /// </summary>
     private const int MARGIN_EDGE = 6;
 
-    private GuiMessageWriter MessageWriter { get; }
+    private WinFormsMessageWriter MessageWriter { get; }
 
     private AppState App { get; }
 
@@ -30,7 +30,7 @@ public partial class GameVersionSelectorForm : Form
         var applicationVersion = FileVersionInfo.GetVersionInfo(Application.ExecutablePath).FileVersion;
         Text += $" v{applicationVersion}";
 
-        MessageWriter = new GuiMessageWriter(richTextBoxInstallMessages);
+        MessageWriter = new WinFormsMessageWriter(richTextBoxInstallMessages);
         App = new AppState(MessageWriter);
 
         ResizeGui();
@@ -108,7 +108,7 @@ public partial class GameVersionSelectorForm : Form
             UpdateGameComboBox();
             UpdatePatchComboBox();
         }
-        catch(HttpRequestException httpEx)
+        catch (HttpRequestException httpEx)
         {
             MessageWriter.WriteLine($"WARNING: Failed to initialize depot database because remote resources could not be reached.{Environment.NewLine}{httpEx.Message}{Environment.NewLine}Using offline depot database instead.");
         }

@@ -5,14 +5,19 @@ namespace GameVersionSelector;
 /// <summary>
 /// Provides centralized access to application-wide services, configuration, and global state.
 /// </summary>
-/// <remarks>AppState acts as a singleton, exposing key services such as configuration management, message
-/// writing, mod installation, and game launching. Use the static Instance property to access the current application
-/// state after initialization. This class is intended to be used as the main entry point for accessing shared
-/// resources and services throughout the application's lifecycle.</remarks>
+/// <remarks>
+/// AppState acts as a singleton, exposing key application data and services. Use the static Instance property to access the current application state after initialization. This class is intended to be used as the main entry point for accessing shared resources and services throughout the application's lifecycle.
+/// </remarks>
 public class AppState
 {
     private static AppState? _instance;
 
+    /// <summary>
+    /// Gets the current <see cref="AppState"/> singleton instance.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">
+    /// Thrown when the application services have not been initialized and <see cref="Instance"/> is accessed.
+    /// </exception>
     public static AppState Instance
     {
         get
@@ -27,22 +32,60 @@ public class AppState
         }
     }
 
+    /// <summary>
+    /// Writes user-facing messages.
+    /// </summary>
     public IMessageWriter MessageWriter { get; }
 
+    /// <summary>
+    /// Resolved path to Steam's "common" directory (typically "...Steam/steamapps/common").
+    /// </summary>
+    /// <remarks>
+    /// This value is initialized from the registry at startup. If Steam is not found in the registry, this property will be an empty string.
+    /// </remarks>
     public string SteamPath { get; set; } = GetSteamPathFromRegistry();
+
+    /// <summary>
+    /// Steam username used by the application for any non-persistent operations.
+    /// </summary>
     public string SteamUsername { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Steam password used by the application for any non-persistent operations.
+    /// </summary>
     public string SteamPassword { get; set; } = string.Empty;
+
+    /// <summary>
+    /// The identifier or friendly name of the currently selected game.
+    /// </summary>
     public string SelectedGame { get; set; } = string.Empty;
+
+    /// <summary>
+    /// The patch/version currently selected for installation.
+    /// </summary>
     public string SelectedPatch { get; set; } = string.Empty;
 
+    /// <summary>
+    /// In-memory database containing depot and patch metadata.
+    /// </summary>
     public DepotDatabase DepotDatabase { get; } = new DepotDatabase();
 
+    /// <summary>
+    /// Creates a new <see cref="AppState"/> and sets the global <see cref="Instance"/>.
+    /// </summary>
+    /// <param name="messageWriter">The message writer used to produce logs and UI messages.</param>
     public AppState(IMessageWriter messageWriter)
     {
         _instance = this;
         MessageWriter = messageWriter;
     }
 
+    /// <summary>
+    /// Attempts to read the Steam installation path from the registry in order to create the path to Steam's root game installation folder (steamapps/common).
+    /// </summary>
+    /// <returns>
+    /// Absolute path to the "Steam/steamapps/common" directory, or an empty string if Steam is not found.
+    /// </returns>
     private static string GetSteamPathFromRegistry()
     {
         object? registryValue = Registry.GetValue(
