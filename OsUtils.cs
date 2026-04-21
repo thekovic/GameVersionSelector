@@ -1,12 +1,37 @@
 ﻿using System.Diagnostics;
-using System.Threading;
 
 namespace GameVersionSelector;
 
+/// <summary>
+/// Utility helpers for managing OS resources.
+/// </summary>
+/// <remarks>
+/// This class centralizes methods used by the application to interact with the operating system.
+/// </remarks>
 public class OsUtils
 {
+    /// <summary>
+    /// The application's global message writer used to display messages to the user.
+    /// </summary>
     private static IMessageWriter MessageWriter { get => AppState.Instance.MessageWriter; }
 
+    /// <summary>
+    /// Starts an external process, relays its stdout/stderr to the application's <see cref="IMessageWriter"/>, and asynchronously waits for the process to exit.
+    /// </summary>
+    /// <param name="processName">The executable name or full path to start (for example, "dotnet" or "C:\tools\mytool.exe").</param>
+    /// <param name="args">An array of command-line arguments to pass to the process. Each element is added to the process argument list.</param>
+    /// <param name="workingDirectory">The working directory for the process. Pass <c>null</c> or an empty string to use the default.</param>
+    /// <param name="cancellationToken">
+    /// A cancellation token used to request termination of the started process. If cancellation is requested the method attempts to kill the process tree and then rethrows an <see cref="OperationCanceledException"/>.
+    /// </param>
+    /// <returns>A task that completes when the process exits. The task result is the process exit code.</returns>
+    /// <remarks>
+    /// The process is started without creating a window (<see cref="ProcessStartInfo.CreateNoWindow"/> = <c>true</c>).
+    /// Standard output and error streams of the launched process are redirected and forwarded to <see cref="MessageWriter"/>.
+    /// If the provided <paramref name="cancellationToken"/> is cancelled, the method will attempt to kill the process (entire process tree) and then wait for termination before rethrowing the cancellation exception to the caller.
+    /// The caller is responsible for handling exceptions from <see cref="Process.Start"/>, such as <see cref="System.ComponentModel.Win32Exception"/>, and for interpreting the returned exit code.
+    /// </remarks>
+    /// <exception cref="OperationCanceledException">Thrown if the operation is cancelled via <paramref name="cancellationToken"/>.</exception>
     public static async Task<int> LaunchProcess(string processName, string[] args, string workingDirectory, CancellationToken cancellationToken = default)
     {
         using var process = new Process();
@@ -53,9 +78,6 @@ public class OsUtils
         process.BeginOutputReadLine();
         // Start capturing stderr
         process.BeginErrorReadLine();
-
-        // Keep method alive until the process exits so the Process is not disposed early
-        //await process.WaitForExitAsync().ConfigureAwait(false);
 
         try
         {
