@@ -68,5 +68,41 @@
         }
       ]
     }
+  },
+  "Legacy of Kain: Soul Reaver 1&2 Remastered": {
+    "FolderName": "Soul Reaver I-II",
+    "AppId": "2521380",
+    "Patches": {
+      "Release Version": [
+        {
+          "DepotId": "2521381",
+          "ManifestId": "3293545904192222028"
+        }
+      ],
+      "Patch 2": [
+        {
+          "DepotId": "2521381",
+          "ManifestId": "4291338010732135215"
+        }
+      ]
+    }
+  },
+  "Legacy of Kain: Defiance Remastered": {
+    "FolderName": "Legacy of Kain Defiance Remastered",
+    "AppId": "3747730",
+    "Patches": {
+      "Patch 1.0.6": [
+        {
+          "DepotId": "3747731",
+          "ManifestId": "2622268380609814290"
+        }
+      ],
+      "Patch 1.0.7": [
+        {
+          "DepotId": "3747731",
+          "ManifestId": "7837036360271435614"
+        }
+      ]
+    }
   }
 }
